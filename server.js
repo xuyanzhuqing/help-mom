@@ -1,39 +1,24 @@
-// const iconv = require('iconv-lite')
-// automatically pick platform
-// const say = require('say')
-// or, override the platform
-// const Say = require('say').Say
-// const say = new Say('darwin' || 'win32' || 'linux')
+import express from 'express'
+import bodyParser from 'body-parser'
+import cors from 'cors'
+import router from './backend/router/index.js'
 
-// Use default system voice and speed
-// say.speak(iconv.encode('家', 'gbk'))
+const app = express()
+const port = 3001
+app.use(cors())
 
-// Stop the text currently being spoken
-// say.stop()
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-// More complex example (with an OS X voice) and slow speed
-// say.speak("What's up, dog?", 'Alex', 0.5)
+app.use(express.static('./backend/resource'));
 
-// // Fire a callback once the text has completed being spoken
-// say.speak("What's up, dog?", 'Good News', 1.0, (err) => {
-//   if (err) {
-//     return console.error(err)
-//   }
+router(app)
 
-//   console.log('Text has been spoken.')
-// });
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
 
-// // Export spoken audio to a WAV file
-// say.export("I'm sorry, Dave.", 'Cellos', 0.75, 'hal.wav', (err) => {
-//   if (err) {
-//     return console.error(err)
-//   }
-
-//   console.log('Text has been saved to hal.wav.')
-// })
-
-const { exec } = require('child_process');
-const iconv = require('iconv-lite'); 
-exec(`powershell.exe Add-Type -AssemblyName System.speech; $speak = New-Object System.Speech.Synthesis.SpeechSynthesizer; $speak.Rate = 1; $speak.Speak([Console]::In.ReadLine()); exit`)
-.stdin
-.end(iconv.encode('王宁宁，我爱你', 'gbk'));
+app.listen(port, function (err) {
+    if (err) return console.info(err)
+    console.info('server is running at localhost' + port )
+})
