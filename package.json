@@ -16,9 +16,11 @@
     "lodash": "^4.17.21",
     "lowdb": "^3.0.0",
     "one-time": "^1.0.0",
+    "perfect-scrollbar": "^1.5.3",
     "querystring": "^0.2.1",
     "uuid": "^8.3.2",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.0",

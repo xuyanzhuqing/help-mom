@@ -6,9 +6,24 @@ import say from '../lib/say/index.js'
 import { xinhua, project } from '../utils/db.js'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import { info } from 'console';
+import query from '../middleware/query.js'
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 router.get('/', async function (req, res) {
+  try {
+    const db = project.word
+    await db.read()
+    const result = lodash.chain(db.data)
+    res.json({ code: 200, result })
+  } catch (error) {
+    res.json({ code: 500, error })
+  }
+})
+
+router.get('/query/project', query(project.word))
+
+router.get('/xinhua', async function (req, res) {
   try {
     const db = xinhua.word
     await db.read()
@@ -21,11 +36,13 @@ router.get('/', async function (req, res) {
 })
 
 router.post('/', async function (req, res) {
-  const { word, lesson } = req.body
+  const { word, lesson, lessonUuid } = req.body
   const item = {
     word,
     lesson,
-    createTime: new Date().getTime()
+    uuid: uuidv4(),
+    lessonUuid,
+    createTime: new Date().getTime(),
   }
   try {
     const db = project.word

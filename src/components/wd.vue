@@ -8,23 +8,39 @@ defineProps({
   value: String
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+@use "sass:math";
+
+$large: 64px;
+$normal: 48px;
+$small: 32px;
+
+@mixin make-size($size) {
+  width: $size;
+  height: $size;
+  font-size: $size * 0.75;
+  line-height: $size * 0.925;
+}
+
 .wd {
   position: relative;
-  width: 64px;
-  height: 64px;
+  @include make-size($normal);
   border: 2px solid sandybrown;
   box-sizing: border-box;
-  font-size: 48px;
   text-align: center;
-  line-height: 60px;
+  &-large {
+    @include make-size($large);
+  }
+  &-small {
+    @include make-size($small);
+  }
   &:after {
-    content: '';
+    content: ''; 
     position: absolute;
     left: 0;
     top: 0px;
     width: 1px;
-    height: 84px;
+    height: #{math.hypot(100%, 100%) * 0.95};
     border-left: 1px dashed red;
     transform: rotate(-45deg);
     transform-origin: 0 0;
@@ -35,7 +51,7 @@ defineProps({
     right: 0;
     top: 0px;
     width: 1px;
-    height: 84px;
+    height: #{math.hypot(100%, 100%) * 0.95};
     border-left: 1px dashed red;
     transform: rotate(45deg);
     transform-origin: 0 0;
