@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import AutoImport from 'unplugin-auto-import/vite'
+import ViteComponents from 'unplugin-vue-components/vite'
 
 const __dirname1 = dirname(fileURLToPath(import.meta.url));
 
@@ -12,5 +14,17 @@ export default defineConfig({
       "@": resolve(__dirname1, "src")
     }
   },
-  plugins: [vue()]
+  plugins: [
+    vue(),
+    AutoImport({
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/,
+        /\.vue\?vue/, // .vue
+        /\.md$/, // .md
+      ],
+      dts: true,
+      imports: ['vue', 'vue-router'],
+    })
+  ]
 })

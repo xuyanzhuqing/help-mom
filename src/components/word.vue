@@ -7,26 +7,7 @@ defineProps({
   value: Object
 })
 import wd from './wd.vue'
-
-import {Howl, Howler} from 'howler';
-
-const play = async (words) => {
-  const res = await axios({
-    url: 'word/read',
-    params: {
-      words
-    }
-  })
-
-  if (res.data.code !== 200) {
-    return
-  }
-
-  var sound = new Howl({
-    src: [`http://localhost:3001/wav/${res.data.result}.wav`]
-  });
-  sound.play()
-};
+import read from './read.vue'
 
 const toggleMore = (e) => {
   const clzList = e.target.classList
@@ -52,7 +33,7 @@ const toggleMore = (e) => {
             <span class="word-pinyin">{{ value.pinyin }}</span>
            </div>
            <div class="column col-2">
-             <css-icon class="icon-audio" @click="play(value.word)"></css-icon>
+             <read :value="value.word"/>
            </div>
           </li>
         <li>

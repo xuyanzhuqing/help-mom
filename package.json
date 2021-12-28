@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
     "axios": "^0.24.0",
@@ -16,7 +16,6 @@
     "lodash": "^4.17.21",
     "lowdb": "^3.0.0",
     "one-time": "^1.0.0",
-    "perfect-scrollbar": "^1.5.3",
     "querystring": "^0.2.1",
     "uuid": "^8.3.2",
     "vue": "^3.2.25",
@@ -25,6 +24,8 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.0",
     "sass": "^1.45.1",
+    "unplugin-auto-import": "^0.5.5",
+    "unplugin-vue-components": "^0.17.11",
     "vite": "^2.7.2"
   },
   "type": "module"

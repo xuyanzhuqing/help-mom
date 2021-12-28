@@ -1,6 +1,9 @@
 <template>
   <ul class="lesson">
-    <li v-for="item in lessonWords" :key="item.uuid" class="lesson-group">
+    <li v-for="item in lessonWords"
+     :key="item.uuid"
+     v-longpress="() => playSound(item.word)"
+     class="lesson-group">
       <wd v-for="it in item.word"
          :key="it"
          :value="it"
@@ -13,8 +16,9 @@
 import wd from '@/components/wd.vue'
 import { onBeforeRouteUpdate } from "vue-router";
 import axios from '@/plugins/axios.js';
-import { onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import play from '@/utils/play.js'
 
 const router = useRouter()
 const lessonWords = ref([])
@@ -44,6 +48,10 @@ onMounted(() => {
 
 const toWord = (word) => {
   router.push({ path: '/xinhua-word', query: { word } })
+}
+
+const playSound = (word) => {
+  play(word)
 }
 
 </script>
