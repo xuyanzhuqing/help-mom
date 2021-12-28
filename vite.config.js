@@ -11,7 +11,17 @@ const __dirname1 = dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   resolve: {
     alias: {
-      "@": resolve(__dirname1, "src")
+      "@": resolve(__dirname1, "src"),
+      "&": resolve(__dirname1, "management"),
+    }
+  },
+  build: {
+    outDir: './backend/resource',
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname1, 'index.html'),
+        management: resolve(__dirname1, 'management/index.html')
+      }
     }
   },
   plugins: [

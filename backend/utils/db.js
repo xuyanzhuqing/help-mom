@@ -1,11 +1,9 @@
 import fs from 'fs'
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
+import { join } from 'path'
 import { Low, JSONFile } from 'lowdb'
-
+import dir from './dir.js'
 const filterJson = arr => arr.endsWith('.json')
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dir(import.meta.url)
 
 function prepare (src) {
     const paths = fs.readdirSync(join(__dirname, src)).filter(filterJson)

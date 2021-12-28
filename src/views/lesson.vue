@@ -2,7 +2,6 @@
   <ul class="lesson">
     <li v-for="item in lessonWords"
      :key="item.uuid"
-     v-longpress="() => playSound(item.word)"
      class="lesson-group">
       <wd v-for="it in item.word"
          :key="it"

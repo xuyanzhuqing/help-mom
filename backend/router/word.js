@@ -62,7 +62,7 @@ router.get('/read', async function (req, res) {
   say.setEncoding('gbk')
   const { words, speed = 1 } = req.query
   const uuid = uuidv4()
-  const dest = join(__dirname, `../resource/wav/${uuid}.wav`)
+  const dest = join(__dirname, `../var/wav/${uuid}.wav`)
   say.export(words, '', speed, dest, function (err) {
     if (err) {
       return res.json({ code: 500, error: err.toString().replace('Error: ', '') })

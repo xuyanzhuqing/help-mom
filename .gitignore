@@ -3,4 +3,5 @@ node_modules
 dist
 dist-ssr
 *.local
-backend/resource/wav/
+backend/resource/
+backend/var/wav/
