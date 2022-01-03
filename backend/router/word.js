@@ -6,7 +6,6 @@ import say from '../lib/say/index.js'
 import { xinhua, project } from '../utils/db.js'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { info } from 'console';
 import query from '../middleware/query.js'
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

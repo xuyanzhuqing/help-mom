@@ -1,9 +1,14 @@
-import word from './word.js'
-import lesson from './lesson.js'
-import grade from './grade.js'
+import fs from 'fs'
+import { join } from 'path'
+import dir from '../utils/dir.js'
+const __dirname = dir(import.meta.url);
 
-export default (app) => {
-    app.use('/word', word)
-    app.use('/lesson', lesson)
-    app.use('/grade', grade)
+const paths = fs.readdirSync(join(__dirname, './')).filter(file => file != 'index.js')
+
+export default (app, prefix = '/api/v1') => {
+  paths.forEach(async (p) => {
+    const route = await import('./' + p)
+    const suffix = p.replace('.js', '')
+    app.use(prefix + '/' + suffix, route.default)
+  })
 }

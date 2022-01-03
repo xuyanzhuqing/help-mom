@@ -39,7 +39,7 @@ const getData = async () => {
 const toUpAndDown = (term) => term === 0 ? '上' : '下'
 
 const check = ({grade, term}) => {
-  router.replace({ path: `/lessons/${grade}/${term}` })
+  router.push({ path: `/lessons/${grade}/${term}` })
 }
 
 onMounted(() => {

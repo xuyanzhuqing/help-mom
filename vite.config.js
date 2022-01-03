@@ -3,12 +3,16 @@ import vue from '@vitejs/plugin-vue'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import AutoImport from 'unplugin-auto-import/vite'
-import ViteComponents from 'unplugin-vue-components/vite'
 
 const __dirname1 = dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api/v1/': 'http://localhost:3001/'
+    }
+  },
   resolve: {
     alias: {
       "@": resolve(__dirname1, "src"),

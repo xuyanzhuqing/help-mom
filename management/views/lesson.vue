@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th>序号</th>
-        <th>年级</th>
+        <th>链接</th>
         <th>学期</th>
         <th></th>
       </tr>

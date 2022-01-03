@@ -21,11 +21,11 @@ const go = (index = 1) => {
 }
 
 const getData = async () => {
-  const res = await axios('/lesson')
+  const res = await axios('/lesson', { params: { xueDuanCode: 'xd0001', njCode: 'njs001' } })
   if (res.data.code === 200) {
     lessons.value = res.data.result
-    if (lessons.value.length === 0) return
-    go()
+    // if (lessons.value.length === 0) return
+    // go()
   } else {
     lessons.value = []
   }

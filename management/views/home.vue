@@ -9,26 +9,15 @@
       </ul>
     </div>
     <div class="column ">
-      <ul class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="#">Home</a>
-        </li>
-        <li class="breadcrumb-item">
-          <a href="#">Settings</a>
-        </li>
-        <li class="breadcrumb-item">
-          <a href="#">Change avatar</a>
-        </li>
-      </ul>
+      <breadcrumb/>
       <router-view/>
-      <router-view name="lessons"/>
     </div>
   </div>
 </div>
 </template>
 <script setup>
 import { menuRoutes } from '&/router/index.js'
-
+import breadcrumb from '../components/breadcrumb.vue';
 </script>
 <style lang="scss" scoped>
 .container, .columns {

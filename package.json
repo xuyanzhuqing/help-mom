@@ -13,15 +13,20 @@
     "express": "^4.17.2",
     "howler": "^2.2.3",
     "iconv-lite": "^0.6.3",
+    "ioredis": "^4.28.2",
     "lodash": "^4.17.21",
     "lowdb": "^3.0.0",
+    "node-fetch": "^3.1.0",
     "node-schedule": "^2.1.0",
     "nzh": "^1.0.8",
     "one-time": "^1.0.0",
     "querystring": "^0.2.1",
+    "swiper": "^7.4.1",
     "uuid": "^8.3.2",
+    "vm2": "^3.9.5",
     "vue": "^3.2.25",
-    "vue-router": "4"
+    "vue-router": "4",
+    "yaml": "^1.10.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.0",
