@@ -1,26 +1,29 @@
 <template>
   <ul class="tab tab-block">
-    <li v-for="(section, index) in sections" 
-    :key="section.danyuanCode"
+    <li v-for="({ danyuanName, danyuanCode }, index) in sections" 
+    :key="danyuanCode"
     :class="{active: active === index}"
     class="tab-item">
-      <router-link :to="'/lesson/' + (index + 1)"> {{index + 1}}- {{section.name}}</router-link>
+      <router-link :to="{path: 'lesson', query: { ...route.query, danyuanCode }}">
+        {{danyuanName}}
+      </router-link>
     </li>
   </ul>
+  <p v-if="sections.length > 0" class="title">{{sections[active]?.danYuanText}}</p>
   <router-view/>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import axios from '@/plugins/axios.js'
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter()
 const route = useRoute()
 
 const sections = ref([])
-
-const go = (index = 1) => {
-  router.push('/lesson/' + index)
-}
+const active = computed(() => {
+  const code = route.query.danyuanCode
+  return sections.value.findIndex(v => v.danyuanCode === code)
+})
 
 const getData = async () => {
   const res = await axios('/lesson/sections', { params: route.query })
@@ -29,6 +32,9 @@ const getData = async () => {
   } else {
     sections.value = []
   }
+  const existed = route.query.hasOwnProperty('danyuanCode')
+  if (sections.value.length === 0 || existed) return
+  router.push({path: 'lesson', query: { ...route.query, danyuanCode: sections.value[0].danyuanCode }})
 }
 
 onMounted(() => {
@@ -45,5 +51,10 @@ onMounted(() => {
        white-space:nowrap;
        padding: 0 6px;
     }
+  }
+  .title {
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.5
   }
 </style>

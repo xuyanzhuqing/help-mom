@@ -39,6 +39,7 @@ export const phases = async function  (req, res, next) {
 export const grades = findBy('xueDuanCode', 'nianJiList')
 export const subjects = findBy('njCode', 'subjectsList')
 export const sections = findBy('xkCode', 'danYuanList')
+export const cases = findBy('danyuanCode', 'caseList')
 
 export default {
   phases,

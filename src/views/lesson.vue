@@ -15,18 +15,21 @@
 import wd from '@/components/wd.vue'
 import { onBeforeRouteUpdate } from "vue-router";
 import axios from '@/plugins/axios.js';
-import { onBeforeUnmount, onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import play from '@/utils/play.js'
+import lodash from 'lodash'
 
 const router = useRouter()
+const route = useRoute()
 const lessonWords = ref([])
-const getData = (to) => {
-  const condition = (to || location.href).match(/\d$/)[0]
+const getData = () => {
+  const { query } = route
+  const keys = ['xkCode','njCode','xueDuanCode','danyuanCode']
   axios('/word/query/project', {
     params: {
-      conditionProp: 'lesson',
-      condition
+      conditionProp: keys.join(),
+      condition: lodash.pick(query, keys)
     }
   }).then(res => {
     if (res.data.code === 200) {
@@ -38,7 +41,7 @@ const getData = (to) => {
 }
 
 onBeforeRouteUpdate((to) => {
-  getData(to.path)
+  getData()
 })
 
 onMounted(() => {
