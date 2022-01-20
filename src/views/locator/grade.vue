@@ -5,7 +5,7 @@
     :key="grade.njCode"
     :class="{'btn-primary': index % 2 === 0}"
     class="btn"
-    @click="jump(grade.njCode)">{{grade.njName}}</button>
+    @click="jump(grade)">{{grade.njName}}</button>
 </div>
 </template>
 <script setup>
@@ -15,7 +15,7 @@ import { useRoute, useRouter } from "vue-router";
 const route = useRoute()
 const router = useRouter()
 const getData = async () => {
-  const res = await axios('/lesson/grade', { params: route.query })
+  const res = await axios('/lesson/grades', { params: route.query })
   if (res.data.code === 200) {
     grades.value = res.data.result
   } else {
@@ -23,8 +23,8 @@ const getData = async () => {
   }
 }
 
-const jump = (code) => {
-  router.push({ path: '/home', query: { code } })
+const jump = ({ njCode }) => {
+  router.push({ path: '/subject', query: { njCode, ...route.query } })
 }
 
 onMounted(() => {

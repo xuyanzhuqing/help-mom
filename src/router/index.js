@@ -16,6 +16,10 @@ const routes = [
         {
           path: '/grade',
           component: () => import('@/views/locator/grade.vue'),
+        },
+        {
+          path: '/subject',
+          component: () => import('@/views/locator/subject.vue'),
         }
       ]
     },

@@ -10,7 +10,7 @@ export default (db) => {
         res.json({ code: 200, result })
       } catch (error) {
         console.info(error)
-          res.json({ code: 500, error })
+        res.json({ code: 500, error })
       }
     }
 }

@@ -1,9 +1,9 @@
 
 <template>
-  <swiper :direction="'vertical'" :pagination='{"clickable": true }' class="mySwiper">
+  <swiper :direction="'vertical'" :pagination='{"clickable": true }'>
     <swiper-slide v-for="phase in phases" :key="phase.xueDuanCode">
       {{phase.xueDuanName}}
-      <button class="btn btn-lg" @click="enter(phase.xueDuanCode)">进入</button>
+      <button class="btn btn-lg" @click="enter(phase)">进入</button>
     </swiper-slide>
   </swiper>
 </template>
@@ -21,12 +21,12 @@ SwiperCore.use([Pagination]);
 
 const phases = ref([])
 
-const enter = (code) => {
-  router.push({ path: '/grade/', query: { code } })
+const enter = ({ xueDuanCode }) => {
+  router.push({ path: '/grade/', query: { xueDuanCode } })
 }
 
 const getData = async () => {
-  const res = await axios('/lesson/phase')
+  const res = await axios('/lesson/phases')
   if (res.data.code === 200) {
     phases.value = res.data.result
   } else {
@@ -39,21 +39,6 @@ onMounted(() => {
 })
 
 </script>
-<style>
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-slide {
-  box-sizing: border-box;
-  padding: 20px;
-  text-align: center;
-  font-size: 32px;
-  background: #fff;
-  flex-direction: column;
-  display: flex;
-  justify-content: space-around;
-  /* align-items: center; */
-}
+<style scoped>
+@import '@/assets/locator/swiper.scss'
 </style>

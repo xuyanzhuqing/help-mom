@@ -21,6 +21,6 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, function (err) {
-    if (err) return console.info(err)
-    console.info('server is running at localhost' + port )
+    if (err) return console.error(err)
+    console.info('server is running at localhost:' + port )
 })

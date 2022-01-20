@@ -1,0 +1,15 @@
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+  font-size: 32px;
+  background: #fff;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-around;
+}

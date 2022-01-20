@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "serve": "echo \"redis-server.exe must be run firstly\" && nodemon ./server.js"
   },
   "dependencies": {
     "axios": "^0.24.0",

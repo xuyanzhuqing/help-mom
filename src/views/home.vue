@@ -1,10 +1,10 @@
 <template>
   <ul class="tab tab-block">
-    <li v-for="(lesson, index) in lessons" 
-    :key="lesson.uuid"
+    <li v-for="(section, index) in sections" 
+    :key="section.danyuanCode"
     :class="{active: active === index}"
     class="tab-item">
-      <router-link :to="'/lesson/' + (index + 1)"> {{index + 1}}- {{lesson.name}}</router-link>
+      <router-link :to="'/lesson/' + (index + 1)"> {{index + 1}}- {{section.name}}</router-link>
     </li>
   </ul>
   <router-view/>
@@ -12,22 +12,22 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import axios from '@/plugins/axios.js'
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 const router = useRouter()
-const lessons = ref([])
+const route = useRoute()
+
+const sections = ref([])
 
 const go = (index = 1) => {
   router.push('/lesson/' + index)
 }
 
 const getData = async () => {
-  const res = await axios('/lesson', { params: { xueDuanCode: 'xd0001', njCode: 'njs001' } })
+  const res = await axios('/lesson/sections', { params: route.query })
   if (res.data.code === 200) {
-    lessons.value = res.data.result
-    // if (lessons.value.length === 0) return
-    // go()
+    sections.value = res.data.result
   } else {
-    lessons.value = []
+    sections.value = []
   }
 }
 
