@@ -4,3 +4,7 @@ redis:
   host: 127.0.0.1
   port: 6379
 
+tougbuEdu:
+  baseUrl: https://tongbu.eduyun.cn
+  path:
+    js: /tbkt/tbkthtml/

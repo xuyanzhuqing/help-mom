@@ -1,26 +1,35 @@
 import { redis } from '../utils/db.js'
+import conf from '../utils/conf.js'
 import * as vm2 from 'vm2'
 import fetch from 'node-fetch'
 
-const getData = async () => {
+
+const parseModule = (text) => {
+  const vm = new vm2.NodeVM();
+  const script = new vm2.VMScript(text)
+  const result = vm.run(script)
+  return result
+}
+
+const getData = async (url, ...varPath) => {
+  const exportsWhat = varPath.join('.')
+  const key = varPath.pop()
   try {
-    let text = await redis.get('xueDuan')
+    let text = await redis.get(key)
     if (!text) {
-      const response = await fetch('https://tongbu.eduyun.cn/tbkt/tbkthtml/ItemJsonData.js');
+      const response = await fetch(url);
       text = await response.text()
-      text+=';module.exports = xueduanJson.xueDuan;'
-      redis.set('xueDuan', text)
+      text +=`;module.exports = ${exportsWhat};`
+      redis.set(key, text)
     }
-    const vm = new vm2.NodeVM();
-    const script = new vm2.VMScript(text)
-    const result = vm.run(script)
-    return result
+    return parseModule(text)
   } catch (e) {
     console.error(e)
     return []
   }
 }
-
+// https://tongbu.eduyun.cn/tbkt/tbkthtml/CaseListJsonData.js?t= 
+// caseJson xueDuan
 const findBy = function (mainKey = '', subKey = '') {
   return function (req, res, next) {
     const _mainKey = req.query[mainKey]
@@ -30,8 +39,11 @@ const findBy = function (mainKey = '', subKey = '') {
   }
 }
 
+const buildUrl = ({ baseUrl = conf.baseUrl, path = conf.path.js, filename }) => `${baseUrl}${path}${filename}`
+
 export const phases = async function  (req, res, next) {
-  const data = await getData()
+  const url = buildUrl('ItemJsonData.js')
+  const data = await getData(url, 'xueduanJson', 'xueDuan')
   res.locals.data = data
   next()
 }
