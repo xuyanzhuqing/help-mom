@@ -28,18 +28,23 @@ const getData = async (url, ...varPath) => {
     return []
   }
 }
-// https://tongbu.eduyun.cn/tbkt/tbkthtml/CaseListJsonData.js?t= 
-// caseJson xueDuan
+
+// 支持单个或者多个搜索条件
 const findBy = function (mainKey = '', subKey = '') {
   return function (req, res, next) {
     const _mainKey = req.query[mainKey]
-    const data = res.locals.data.find(v => v[mainKey] === _mainKey)[subKey] ?? []
+    let data = []
+    if (Array.isArray(_mainKey)) {
+      data = res.locals.data.filter(v => _mainKey.includes(v[mainKey])) || []
+    } else {
+      data = res.locals.data.find(v => v[mainKey] === _mainKey)[subKey] ?? []
+    }
     res.locals.data = data
     next()
   }
 }
 
-const buildUrl = ({ baseUrl = conf.baseUrl, path = conf.path.js, filename }) => `${baseUrl}${path}${filename}`
+const buildUrl = (filename, { baseUrl = conf.tougbuEdu.baseUrl, path= conf.tougbuEdu.path.js } = {}) => `${baseUrl}${path}${filename}`
 
 export const phases = async function  (req, res, next) {
   const url = buildUrl('ItemJsonData.js')
@@ -52,6 +57,15 @@ export const grades = findBy('xueDuanCode', 'nianJiList')
 export const subjects = findBy('njCode', 'subjectsList')
 export const sections = findBy('xkCode', 'danYuanList')
 export const cases = findBy('danyuanCode', 'caseList')
+
+export const caseList = async function (req, res, next) {
+  const url = buildUrl('CaseListJsonData.js')
+  const data = await getData(url, 'caseJson', 'clist')
+  res.locals.data = data
+  next()
+}
+
+export const caseInfo = findBy('caseCode', 'caseBeanList')
 
 export default {
   phases,

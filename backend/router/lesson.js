@@ -1,6 +1,6 @@
 import express from 'express'
 import lodash from 'lodash';
-import { phases, grades, subjects, sections, cases } from '../middleware/lesson.js'
+import { phases, grades, subjects, sections, cases, caseList, caseInfo } from '../middleware/lesson.js'
 
 const { pick } = lodash;
 const router = express.Router()
@@ -25,5 +25,8 @@ router.get('/grades/', phases, grades, pickBy('njCode', 'njName'))
 router.get('/subjects', phases, grades, subjects, pickBy('xkName', 'xkCode'))
 router.get('/sections', phases, grades, subjects, sections, pickBy('danyuanCode', 'danyuanName', 'danYuanText'))
 router.get('/cases', phases, grades, subjects, sections, cases, pickBy('caseCode'))
+
+router.get('/case-list', caseList, pickBy())
+router.get('/case-info', caseList, caseInfo, pickBy())
 
 export default router

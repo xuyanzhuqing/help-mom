@@ -27,6 +27,7 @@ const routes = [
       path: '/home',
       component: () => import('@/views/home.vue'),
       children: [
+          { path: '/cases', component: () => import('@/views/cases.vue') },
           { path: '/lesson', component: () => import('@/views/lesson.vue') },
           { path: '/xinhua-word/', component: () => import('@/views/xinhua-word.vue') },
       ]

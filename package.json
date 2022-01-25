@@ -2,7 +2,7 @@
   "name": "help-mom",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "serve": "echo \"redis-server.exe must be run firstly\" && nodemon ./server.js"

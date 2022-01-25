@@ -4,18 +4,18 @@
     :key="danyuanCode"
     :class="{active: active === index}"
     class="tab-item">
-      <router-link :to="{path: 'lesson', query: { ...route.query, danyuanCode }}">
+      <router-link :to="{path: 'cases', query: { ...route.query, danyuanCode }}">
         {{danyuanName}}
       </router-link>
     </li>
   </ul>
-  <p v-if="sections.length > 0" class="title">{{sections[active]?.danYuanText}}</p>
+  <p v-if="sections.length > 0" class="title">{{title}}</p>
   <router-view/>
 </template>
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import axios from '@/plugins/axios.js'
-import { useRouter, useRoute } from "vue-router";
+import { useRouter, useRoute, onBeforeRouteUpdate } from "vue-router";
 const router = useRouter()
 const route = useRoute()
 
@@ -34,12 +34,20 @@ const getData = async () => {
   }
   const existed = route.query.hasOwnProperty('danyuanCode')
   if (sections.value.length === 0 || existed) return
-  router.push({path: 'lesson', query: { ...route.query, danyuanCode: sections.value[0].danyuanCode }})
+  router.push({path: 'cases', query: { ...route.query, danyuanCode: sections.value[0].danyuanCode }})
 }
 
+const title = computed(() => {
+  const { danYuanText, danyuanName } = sections.value[active.value] || {}
+  return danYuanText || danyuanName
+})
+
 onMounted(() => {
+  axios('/lesson')
   getData()
 })
+
+onBeforeRouteUpdate(getData)
 
 
 </script>

@@ -18,19 +18,14 @@ import axios from '@/plugins/axios.js';
 import { onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import play from '@/utils/play.js'
-import lodash from 'lodash'
 
 const router = useRouter()
 const route = useRoute()
 const lessonWords = ref([])
 const getData = () => {
   const { query } = route
-  const keys = ['xkCode','njCode','xueDuanCode','danyuanCode']
-  axios('/word/query/project', {
-    params: {
-      conditionProp: keys.join(),
-      condition: lodash.pick(query, keys)
-    }
+  axios('/lesson/cases', {
+    params: query
   }).then(res => {
     if (res.data.code === 200) {
       lessonWords.value = res.data.result
@@ -40,13 +35,8 @@ const getData = () => {
   })
 }
 
-onBeforeRouteUpdate((to) => {
-  getData()
-})
-
-onMounted(() => {
-  getData()
-})
+onBeforeRouteUpdate(getData)
+onMounted(getData)
 
 const toWord = (word) => {
   router.push({ path: '/xinhua-word', query: { word } })
