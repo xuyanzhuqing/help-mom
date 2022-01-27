@@ -3,7 +3,6 @@ import conf from '../utils/conf.js'
 import * as vm2 from 'vm2'
 import fetch from 'node-fetch'
 
-
 const parseModule = (text) => {
   const vm = new vm2.NodeVM();
   const script = new vm2.VMScript(text)

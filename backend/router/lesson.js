@@ -14,7 +14,15 @@ function pickBy (...keys) {
     res.json({ code: 200, result })
   }
 }
-
+/**
+ * @openapi
+ * /lesson:
+ *   get:
+ *     description: Welcome to swagger-jsdoc!
+ *     responses:
+ *       200:
+ *         description: Returns a mysterious string.
+ */
 router.get('/', phases, function (req, res) {
   const result = res.locals.data
   res.json({ code: 200, result })
