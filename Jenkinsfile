@@ -8,6 +8,7 @@ pipeline {
           'nvmInstallURL': 'https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh',
           'nvmNodeJsOrgMirror': 'https://npmmirror.com/mirrors/node/'
         ) {
+          sh 'git push --tags'
           sh 'node -v'
           sh 'npm config ls'
           sh 'npm install --loglevel info'
