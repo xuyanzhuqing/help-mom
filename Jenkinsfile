@@ -1,6 +1,12 @@
 pipeline {
   agent any
   stages {
+    stage('Make a tag') {
+      steps {
+        sh 'git push --tags'
+        sh 'git config -l'
+      }
+    }
     stage('Building npm package') {
       steps {
         nvm(
@@ -8,7 +14,6 @@ pipeline {
           'nvmInstallURL': 'https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh',
           'nvmNodeJsOrgMirror': 'https://npmmirror.com/mirrors/node/'
         ) {
-          sh 'git push --tags'
           sh 'node -v'
           sh 'npm config ls'
           sh 'npm install --loglevel info'
